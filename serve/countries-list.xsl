@@ -18,51 +18,79 @@
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-extensions@6.2.7/dist/css/bulma-extensions.min.css"/>
     </head>
     <body>
-      <div class="container">
-        <h1 class="title">Partie 1</h1>
-        <section class="accordions">
-          <article class="accordion">
-            <div class="accordion-header toggle">
-              <p>Liste des pays par ordre croissant des noms</p>
-            </div>
-            <div class="accordion-body">
-              <div class="accordion-content">
-                <xsl:for-each select="/demo:countries/demo:country">
-                  <xsl:sort select="@name" order="ascending"></xsl:sort>
-                  <p><xsl:value-of select="@name"/></p>
-                </xsl:for-each>
-              </div>
-            </div>
-          </article>
-          <article class="accordion">
-            <div class="accordion-header toggle">
-              <p>Liste des pays par ordre croissant des populations</p>
-            </div>
-            <div class="accordion-body">
-              <div class="accordion-content">
-                <xsl:for-each select="/demo:countries/demo:country">
-                  <xsl:sort select="@population" order="ascending"></xsl:sort>
-                  <p><xsl:value-of select="@name"/></p>
-                </xsl:for-each>
-              </div>
-            </div>
-          </article>
-          <article class="accordion">
-            <div class="accordion-header toggle">
-              <p>Liste des pays par ordre croissant des superficies</p>
-            </div>
-            <div class="accordion-body">
-              <div class="accordion-content">
-                <xsl:for-each select="/demo:countries/demo:country">
-                  <xsl:sort select="@area" order="ascending"></xsl:sort>
-                  <p><xsl:value-of select="@name"/></p>
-                </xsl:for-each>
-              </div>
-            </div>
-          </article>
-        </section>
-      </div>
 
+      <div class="columns">
+        <div  class="column is-one-third">
+          <aside class="menu" style="position: fixed;">
+            <p class="menu-label">
+              Pays triés
+            </p>
+            <ul class="menu-list">
+              <li><a href="#pays_sort_name">Ordre alphabétique</a></li>
+              <li><a href="#pays_sort_population">Population</a></li>
+              <li><a href="#pays_sort_area">Superficie</a></li>
+            </ul>
+
+            <p class="menu-label">
+              Les 10 premiers pays
+            </p>
+            <ul class="menu-list">
+              <xsl:apply-templates mode="menu" select="demo:country[position() &lt;= 10]"/>
+            </ul>
+          </aside>
+        </div>
+        <div class="column">
+          <div class="container">
+            <h1 class="title">Pays triés</h1>
+            <section class="accordions">
+              <article class="accordion">
+                <div class="accordion-header toggle">
+                  <p id="pays_sort_name">Liste des pays par ordre croissant des noms</p>
+                </div>
+                <div class="accordion-body">
+                  <div class="accordion-content">
+                    <xsl:for-each select="/demo:countries/demo:country">
+                      <xsl:sort select="@name" order="ascending"></xsl:sort>
+                      <p><xsl:value-of select="@name"/></p>
+                    </xsl:for-each>
+                  </div>
+                </div>
+              </article>
+              <article class="accordion">
+                <div class="accordion-header toggle">
+                  <p id="pays_sort_population">Liste des pays par ordre croissant des populations</p>
+                </div>
+                <div class="accordion-body">
+                  <div class="accordion-content">
+                    <xsl:for-each select="/demo:countries/demo:country">
+                      <xsl:sort select="@population" order="ascending"></xsl:sort>
+                      <p><xsl:value-of select="@name"/></p>
+                    </xsl:for-each>
+                  </div>
+                </div>
+              </article>
+              <article class="accordion">
+                <div class="accordion-header toggle">
+                  <p id="pays_sort_area">Liste des pays par ordre croissant des superficies</p>
+                </div>
+                <div class="accordion-body">
+                  <div class="accordion-content">
+                    <xsl:for-each select="/demo:countries/demo:country">
+                      <xsl:sort select="@area" order="ascending"></xsl:sort>
+                      <p><xsl:value-of select="@name"/></p>
+                    </xsl:for-each>
+                  </div>
+                </div>
+              </article>
+            </section>
+
+            <hr/>
+
+            <h1 class="title">Les 10 premiers pays</h1>
+            <xsl:apply-templates select="demo:country[position() &lt;= 10]"/>
+          </div>
+        </div>
+      </div>
 		  <!-- <h3 class="title">list pays hispanisant</h3>
       <xsl:apply-templates select="/demo:countries/demo:country[demo:language = 'Spanish']/@name"/>
 
@@ -91,12 +119,28 @@
   </html>
 </xsl:template>
 
+<xsl:template match="demo:country">
+  <h2 id="{generate-id(@name)}" class="subtitle"><xsl:value-of select="@name"/></h2>
+</xsl:template>
+
+<xsl:template match="demo:country" mode="menu">
+  <li><a href="#{generate-id(@name)}"><xsl:value-of select="@name"/></a></li>
+</xsl:template>
+
 <xsl:template match="demo:name">
   <p><xsl:apply-templates/></p>
 </xsl:template>
 
 <xsl:template match="@name">
   <p><xsl:value-of select="."/></p>
+</xsl:template>
+
+<xsl:template match="demo:country/demo:city">
+
+</xsl:template>
+
+<xsl:template match="demo:country/demo:language">
+
 </xsl:template>
 
 <!--
