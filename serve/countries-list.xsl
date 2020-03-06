@@ -21,7 +21,7 @@
     <body>
 
       <div class="columns">
-        <div class="column is-one-third">
+        <div class="column is-one-quarter">
 
           <aside class="menu fixed-side-menu" style="position: fixed;">
             <p class="menu-label">
