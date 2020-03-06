@@ -126,6 +126,30 @@
 
 <xsl:template match="demo:country">
   <h2 id="{generate-id(@name)}" class="subtitle"><xsl:value-of select="@name"/></h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">
+          superficie
+        </th>
+        <th scope="col">
+          population
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <xsl:value-of select="@area"/>
+        </td>
+        <td>
+          <xsl:value-of select="@population"/>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <hr/>
 </xsl:template>
 
 <xsl:template match="demo:country" mode="menu">
