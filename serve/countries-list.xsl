@@ -10,6 +10,7 @@
       <meta charset="utf-8"/>
       <meta name="viewport" content="width=device-width, initial-scale=1"/>
       <title>Liste des pays</title>
+      <link rel="stylesheet" href="./main.css"/>
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css"/>
       <script src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/bulma-extensions@6.2.7/dist/js/bulma-extensions.min.js"></script>
@@ -20,11 +21,13 @@
     <body>
 
       <div class="columns">
-        <div  class="column is-one-third">
-          <aside class="menu" style="position: fixed;">
+        <div class="column is-one-third">
+
+          <aside class="menu fixed-side-menu" style="position: fixed;">
             <p class="menu-label">
               Pays triés
             </p>
+
             <ul class="menu-list">
               <li><a href="#pays_sort_name">Ordre alphabétique</a></li>
               <li><a href="#pays_sort_population">Population</a></li>
@@ -32,12 +35,14 @@
             </ul>
 
             <p class="menu-label">
-              Les 10 premiers pays
+              Détails par pays
             </p>
             <ul class="menu-list">
-              <xsl:apply-templates mode="menu" select="demo:country[position() &lt;= 10]"/>
+              <xsl:apply-templates mode="menu" select="demo:country"/>
             </ul>
           </aside>
+
+
         </div>
         <div class="column">
           <div class="container">
@@ -87,7 +92,7 @@
             <hr/>
 
             <h1 class="title">Les 10 premiers pays</h1>
-            <xsl:apply-templates select="demo:country[position() &lt;= 10]"/>
+            <xsl:apply-templates select="demo:country"/>
           </div>
         </div>
       </div>
