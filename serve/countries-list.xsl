@@ -148,8 +148,20 @@
       </tr>
     </tbody>
   </table>
+  <div class="content">
+    <ol type="1">
+      <xsl:apply-templates select="demo:city" mode="city-info"/>
+    </ol>
+  </div>
+
 
   <hr/>
+</xsl:template>
+
+<xsl:template match="demo:country/demo:city" mode="city-info">
+  <li>
+    <xsl:value-of select="demo:name"/>, <xsl:value-of select="demo:population"/> habitants, <xsl:value-of select="ceiling(demo:population div ../@population * 100)"/> % de la population totale.
+  </li>
 </xsl:template>
 
 <xsl:template match="demo:country" mode="menu">
