@@ -77,7 +77,7 @@
                   <div class="accordion-body">
                     <div class="accordion-content">
                       <xsl:for-each select="/demo:countries/demo:country">
-                        <xsl:sort select="@population" order="ascending"></xsl:sort>
+                        <xsl:sort select="@population" data-type="number" order="ascending"></xsl:sort>
                         <p>
                           <xsl:value-of select="@name"/>
                         </p>
@@ -92,7 +92,7 @@
                   <div class="accordion-body">
                     <div class="accordion-content">
                       <xsl:for-each select="/demo:countries/demo:country">
-                        <xsl:sort select="@area" order="ascending"/>
+                        <xsl:sort select="@area" data-type="number" order="ascending"/>
                         <p>
                           <xsl:value-of select="@name"/>
                         </p>
