@@ -1,8 +1,7 @@
 <xsl:stylesheet
         xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
         xmlns:demo="http://exemple.com/ns/countries"
-        xmlns:math="http://exslt.org/math"
-        version="1.0">
+        version="2.0">
 
     <xsl:template match="demo:countries">
         <html>
@@ -188,9 +187,10 @@
             </ol>
         </div>
 
+
         <svg xmlns="http://www.w3.org/2000/svg" width="600" height="100">
             <xsl:apply-templates select="demo:city" mode="city-histo-pop">
-                <xsl:sort select="demo:population" data-type="number" order="descending" />
+                <xsl:sort select="demo:population" data-type="number" order="descending"/>
             </xsl:apply-templates>
         </svg>
 
@@ -198,11 +198,17 @@
     </xsl:template>
 
     <xsl:template match="demo:country/demo:city" mode="city-histo-pop">
+        <xsl:variable name="city_pop_max">
+            <xsl:for-each select="../demo:city">
+                <xsl:sort select="demo:population" order="descending" data-type="number" />
+                <xsl:if test="position()=1"><xsl:value-of select="demo:population" /></xsl:if>
+            </xsl:for-each>
+        </xsl:variable>
         <rect
                 x="{(600 div count(../demo:city) * position()) - 600 div count(../demo:city)}"
-                y="{100 - demo:population div ../@population * 100}"
+                y="{100 - demo:population div $city_pop_max * 100}"
                 width="{600 div count(../demo:city)}"
-                height="{demo:population div ../@population * 100}"
+                height="{demo:population div $city_pop_max * 100}"
                 fill="blue"
                 stroke="black"
         />
