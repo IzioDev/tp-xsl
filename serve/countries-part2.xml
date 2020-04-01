@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet type="text/xsl" href="countries-list.xsl"?>
+<?xml-stylesheet type="text/xsl" href="countries-part2.xsl"?>
 
-<countries xmlns="http://exemple.com/ns/countries">
+<countries xmlns="countries-part1.xml">
   <country name="Afghanistan" population="22664136" area="647500">
     <language percentage="11">Turkic</language>
     <language percentage="35">Pashtu</language>
