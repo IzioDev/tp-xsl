@@ -44,9 +44,4 @@
             </body>
         </html>
     </xsl:template>
-
-    <xsl:template match="demo:country">
-
-    </xsl:template>
-
 </xsl:stylesheet>
