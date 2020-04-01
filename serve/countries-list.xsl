@@ -48,8 +48,6 @@
                                 <xsl:apply-templates mode="menu" select="demo:country"/>
                             </ul>
                         </aside>
-
-
                     </div>
                     <div class="column">
                         <div class="container">
@@ -133,24 +131,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- <h3 class="title">list pays hispanisant</h3>
-              <xsl:apply-templates select="/demo:countries/demo:country[demo:language = 'Spanish']/@name"/>
-
-              <hr/>
-
-                  <h3 class="title">list pays hispanisant > 30 000 000 ha</h3>
-              <xsl:apply-templates select="/demo:countries/demo:country[demo:language = 'Spanish'][@population > 30000000]/@name"/>
-
-              <hr/>
-
-              <h3 class="title">list villes</h3>
-              <xsl:apply-templates select="demo:country[demo:language = 'Spanish']/descendant::demo:name"/>
-
-              <hr/>
-
-              <h3 class="title">Liste des pays ayant des villes de plus de 8 million d'hab</h3>
-              <xsl:apply-templates select="demo:country/demo:city[demo:population > 8000000]/ancestor::demo:country/@name"/>
-              <xsl:apply-templates select="demo:country[demo:city/demo:population > 8000000]/@name"/> -->
             </body>
         </html>
     </xsl:template>
@@ -187,21 +167,53 @@
             </ol>
         </div>
 
+        <xsl:if test="count(demo:city) > 0">
+            <svg xmlns="http://www.w3.org/2000/svg" width="600" height="100">
+                <xsl:apply-templates select="demo:city" mode="city-histo-pop">
+                    <xsl:sort select="demo:population" data-type="number" order="descending"/>
+                </xsl:apply-templates>
+            </svg>
+        </xsl:if>
 
-        <svg xmlns="http://www.w3.org/2000/svg" width="600" height="100">
-            <xsl:apply-templates select="demo:city" mode="city-histo-pop">
-                <xsl:sort select="demo:population" data-type="number" order="descending"/>
-            </xsl:apply-templates>
-        </svg>
-
+        <xsl:if test="count(demo:language) > 0">
+            <h1 class="sub-title">Répartition des langages</h1>
+            <svg xmlns="http://www.w3.org/2000/svg" width="300" height="120">
+                <rect
+                        x="0"
+                        y="10"
+                        width="50"
+                        height="100"
+                        fill="#EADADA"
+                />
+                <xsl:apply-templates select="demo:language" mode="language-repartition">
+                    <xsl:sort select="@percentage" data-type="number" order="descending"/>
+                </xsl:apply-templates>
+            </svg>
+        </xsl:if>
         <hr/>
+    </xsl:template>
+
+    <xsl:template match="demo:language" mode="language-repartition">
+        <rect
+                x="0"
+                y="{110 - @percentage}"
+                width="{50}"
+                height="2"
+                fill="blue"
+        />
+        <text x="56" y="{110 - @percentage + 6}"
+              font-family="Verdana"
+              font-size="12"
+              xml:space="preserve"><xsl:value-of select="."></xsl:value-of> - <xsl:value-of select="@percentage"></xsl:value-of>%</text>
     </xsl:template>
 
     <xsl:template match="demo:country/demo:city" mode="city-histo-pop">
         <xsl:variable name="city_pop_max">
             <xsl:for-each select="../demo:city">
-                <xsl:sort select="demo:population" order="descending" data-type="number" />
-                <xsl:if test="position()=1"><xsl:value-of select="demo:population" /></xsl:if>
+                <xsl:sort select="demo:population" order="descending" data-type="number"/>
+                <xsl:if test="position()=1">
+                    <xsl:value-of select="demo:population"/>
+                </xsl:if>
             </xsl:for-each>
         </xsl:variable>
         <rect
@@ -249,15 +261,4 @@
     <xsl:template match="demo:country/demo:language">
 
     </xsl:template>
-
-    <!--
-   <xsl:template match="demo:city">
-     <p>une ville !!</p>
-   </xsl:template>
-
-
-   <xsl:template match="demo:country">
-     <p>un pays !!</p>
-   </xsl:template>
-  -->
 </xsl:stylesheet>
